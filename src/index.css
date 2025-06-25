@@ -1,7 +1,9 @@
 @import "tailwindcss";
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: light, dark --default, black;
+}
 
 
 @layer components {
