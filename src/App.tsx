@@ -1,18 +1,13 @@
-import WriterEditor from "./components/WriterEditor";
+import WriterEditor from "./components/WriterEditor"
 
 function App() {
   return (
-    <main className="min-h-screen flex items-start justify-center p-16 bg-background">
-      <button className="btn btn-neutral">Neutral</button>
-      <button className="btn btn-primary">Primary</button>
-      <button className="btn btn-secondary">Secondary</button>
-      <button className="btn btn-accent">Accent</button>
-      <button className="btn btn-info">Info</button>
-      <button className="btn btn-success">Success</button>
-      <button className="btn btn-warning">Warning</button>
-      <button className="btn btn-error">Error</button>
+    <main className="bg-background flex min-h-screen items-start justify-center p-16">
+      <div className="min-w-5xl">
+        <WriterEditor />
+      </div>
     </main>
-  );
+  )
 }
 
-export default App;
+export default App

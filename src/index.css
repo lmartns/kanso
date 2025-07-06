@@ -1,13 +1,48 @@
-@import "tailwindcss";
-@import "tailwindcss/preflight.css" layer(base);
-@import "tailwindcss/utilities.css" layer(utilities);
+@import 'tailwindcss';
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css' layer(utilities);
 @plugin "daisyui" {
-  themes: light, dark --default, black;
+  themes:
+    light,
+    dark --default,
+    dark;
 }
 
+@theme {
+  --font-geist: 'Geist', sans-serif;
+}
 
-@layer components {
-  .custom-text-area {
-    @apply w-full max-w-2xl bg-transparent text-lg resize-none border-none focus:ring-0 outline-none;
+/* Animação do cursor */
+@keyframes cursor-breath {
+  0%, 100% {
+    opacity: 1;
   }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Estilo do cursor do Tiptap */
+.ProseMirror-cursor {
+  animation: cursor-breath 1.2s infinite;
+  background-color: #ffdd00; /* Amarelo */
+  width: 3px !important; /* Força a largura */
+}
+
+/* Estilo do Placeholder */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+/* Garante que o texto seja legível em ambos os temas */
+.prose {
+  color: #000; /* Preto para o tema claro */
+}
+
+.dark .prose {
+  color: #fff; /* Branco para o tema escuro */
 }
