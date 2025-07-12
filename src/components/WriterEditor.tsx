@@ -18,7 +18,7 @@ const MenuBar = () => {
 
 const extensions = [
   Color.configure({ types: [TextStyle.name, ListItem.name] }),
-  TextStyle.configure({ types: [ListItem.name] }),
+  TextStyle,
   StarterKit.configure({
     bulletList: {
       keepMarks: true,
@@ -41,6 +41,8 @@ export default () => {
       slotBefore={<MenuBar />}
       extensions={extensions}
       content={content}
+      className="editor-content"
+      autofocus
     ></EditorProvider>
   )
 }

@@ -1,8 +1,8 @@
-import WriterEditor from "./components/WriterEditor"
+import WriterEditor from './components/WriterEditor'
 
 function App() {
   return (
-    <main className="bg-background flex min-h-screen items-start justify-center p-16">
+    <main className="flex min-h-screen items-start justify-center p-16">
       <div className="min-w-5xl">
         <WriterEditor />
       </div>
