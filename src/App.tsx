@@ -1,13 +1,12 @@
-import WriterEditor from './components/WriterEditor'
+import Writer from './components/Writer'
 
 function App() {
   return (
-    <main className="flex min-h-screen items-start justify-center p-16">
-      <div className="min-w-5xl">
-        <WriterEditor />
-      </div>
+    <main className="bg-background text-foreground flex min-h-screen flex-col items-center justify-center">
+      <Writer />
     </main>
   )
 }
 
 export default App
+

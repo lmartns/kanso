@@ -96,6 +96,38 @@
   }
 }
 
+.ProseMirror {
+  caret-color: transparent;
+  position: relative;
+}
+
 .ProseMirror:focus {
   outline: none;
+}
+
+.custom-caret {
+  display: inline-block;
+  position: relative;
+  left: -1px;
+  margin-right: -1px;
+  width: 3.5px;
+  height: 1.4em;
+  background-color: #f2c657;
+  pointer-events: none;
+  top: 5px;
+  animation: blink 2s infinite;
+}
+
+.custom-caret.blinking {
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
