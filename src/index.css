@@ -15,10 +15,13 @@
 
   ul,
   ol {
-    padding: 0 1rem;
+    list-style-type: disc;
+    list-style-position: inside;
+    padding-left: 1.5rem;
     margin: 1.25rem 1rem 1.25rem 0.4rem;
 
     li p {
+      display: inline;
       margin-top: 0.25em;
       margin-bottom: 0.25em;
     }
