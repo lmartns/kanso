@@ -1,24 +1,12 @@
-import { CustomCaretExtension } from '@/lib/extensions/custom-caret'
 import '../index.css'
+import { Editor, EditorContent } from '@tiptap/react'
 
-import { EditorProvider } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
+const Writer = ({ editor }: { editor: Editor | null }) => {
+  if (!editor) {
+    return null
+  }
 
-const extensions = [
-  StarterKit.configure({
-    history: false,
-  }),
-  CustomCaretExtension,
-]
-
-const Writer = () => {
-  return (
-    <EditorProvider
-      extensions={extensions}
-      autofocus
-      content="<p></p>"
-    ></EditorProvider>
-  )
+  return <EditorContent editor={editor} />
 }
 
 export default Writer

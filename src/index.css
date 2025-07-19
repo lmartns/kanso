@@ -7,7 +7,9 @@
 @theme {
   --font-geist: 'Geist', sans-serif;
 }
-
+html {
+  @apply scroll-pb-[50vh];
+}
 @layer base {
   html,
   body {
@@ -20,7 +22,6 @@
 }
 
 .tiptap {
-  /*   min-width: 70vh; */
   font-size: 1.2rem;
   :first-child {
     margin-top: 0;
