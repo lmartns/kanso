@@ -2,11 +2,12 @@ import Writer from './components/Writer'
 
 function App() {
   return (
-    <main className="bg-background text-foreground flex min-h-screen flex-col items-center justify-center">
-      <Writer />
+    <main className="bg-background text-foreground min-h-screen">
+      <div className="writer-container">
+        <Writer />
+      </div>
     </main>
   )
 }
 
 export default App
-
