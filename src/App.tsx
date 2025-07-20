@@ -6,45 +6,31 @@ import { useEditor } from '@tiptap/react'
 import { Button } from './components/ui/button'
 import { FileDown } from 'lucide-react'
 import { generateFileName } from './lib/utils/generate-file-name'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 
 function App() {
   const savedContent = localStorage.getItem('kanso-editor-content')
-  const focusTimeout = useRef<number | null>(null)
-
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 
   const editor = useEditor({
     extensions: [StarterKit, CustomCaretExtension],
-    autofocus: 'end',
+    autofocus: isMobile ? false : 'end',
     content: savedContent ? JSON.parse(savedContent) : '',
     editorProps: {
       attributes: {
         class: 'prose-mirror-editor',
         'data-testid': 'editor',
-        'contenteditable': 'true',
-        'spellcheck': 'false',
       },
-      handleDOMEvents: {
-        touchstart: () => {
-          return false
-        }
-      }
     },
-    onBlur: () => {
-      if (!isMobile) {
-        focusTimeout.current = window.setTimeout(() => {
+    ...(isMobile ? {} : {
+      onBlur: () => {
+        setTimeout(() => {
           if (editor && !editor.isFocused) {
             editor.chain().focus().run()
           }
-        }, 1000)
-      }
-    },
-    onFocus: () => {
-      if (focusTimeout.current) {
-        clearTimeout(focusTimeout.current)
-      }
-    },
+        }, 1500)
+      },
+    }),
   })
 
   useEffect(() => {
@@ -61,19 +47,6 @@ function App() {
       clearTimeout(debounceTimer)
     }
   }, [editor?.state.doc.content, editor])
-
-  useEffect(() => {
-    if (editor && isMobile) {
-      const handleTouch = () => {
-        if (!editor.isFocused) {
-          editor.commands.focus()
-        }
-      }
-      
-      document.addEventListener('touchstart', handleTouch)
-      return () => document.removeEventListener('touchstart', handleTouch)
-    }
-  }, [editor, isMobile])
 
   const handleDownloadMD = () => {
     if (!editor) return
@@ -98,7 +71,7 @@ function App() {
         </Button>
       </div>
 
-      <div className="writer-container">
+      <div className={`writer-container ${isMobile ? 'mobile-writer' : ''}`}>
         <Writer editor={editor} />
       </div>
     </main>

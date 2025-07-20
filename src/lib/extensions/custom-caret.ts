@@ -28,26 +28,6 @@ export const CustomCaretExtension = Extension.create({
 
             return DecorationSet.create(state.doc, [decoration])
           },
-
-          handleDOMEvents: {
-            mousedown: (view, _event) => {
-              setTimeout(() => {
-                if (!view.hasFocus()) {
-                  view.focus()
-                }
-              }, 0)
-              return false
-            },
-            
-            touchstart: (view, _event) => {
-              setTimeout(() => {
-                if (!view.hasFocus()) {
-                  view.focus()
-                }
-              }, 0)
-              return false
-            },
-          },
         },
       }),
     ]

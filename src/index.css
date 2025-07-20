@@ -1,13 +1,18 @@
 @import 'tailwindcss';
 @import 'tailwindcss/preflight.css' layer(base);
 @import 'tailwindcss/utilities.css' layer(utilities);
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
   --font-geist: 'Geist', sans-serif;
 }
+
+html {
+  scroll-behavior: auto;
+}
+
 html {
   @apply scroll-pb-[50vh];
 }
@@ -18,12 +23,19 @@ html {
   }
 }
 
+.mobile-writer {
+  padding: 2rem 1rem;
+  min-height: 60vh;
+}
+
 .writer-container {
   @apply mx-auto max-w-4xl px-4 py-12 md:px-8 md:py-24;
 }
 
 .tiptap {
   font-size: 1.2rem;
+  min-height: 50vh;
+
   :first-child {
     margin-top: 0;
   }
@@ -145,27 +157,36 @@ html {
 }
 
 @media (max-width: 768px) {
+  html {
+    scroll-padding-bottom: 0;
+  }
+
   .ProseMirror {
-    -webkit-user-select: text;
+    caret-color: #f2c657 !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
+    min-height: 50vh;
   }
-  
+
   .custom-caret {
-    display: none;
+    display: none !important;
   }
-  
-  .ProseMirror {
-    caret-color: #f2c657 !important;
-  }
-  
-  .writer-container {
-    padding-bottom: 50vh;
-  }
-  
-  input, textarea, select {
+
+  .tiptap {
     font-size: 16px;
+  }
+
+  .mobile-writer {
+    padding: 1rem;
+    padding-bottom: 30vh;
+  }
+
+  body {
+    -webkit-overflow-scrolling: touch;
+    position: relative;
   }
 }
 
@@ -173,6 +194,12 @@ html {
   .ProseMirror {
     -webkit-user-select: text !important;
     user-select: text !important;
+  }
+
+  input,
+  textarea,
+  [contenteditable] {
+    font-size: 16px !important;
   }
 }
 
@@ -260,8 +287,8 @@ html {
 }
 
 .dark {
-  --background: #1A1A1A;
-  --foreground: #CCCCCC;
+  --background: #1a1a1a;
+  --foreground: #cccccc;
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
