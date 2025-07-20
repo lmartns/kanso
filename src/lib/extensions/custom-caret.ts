@@ -2,10 +2,6 @@ import { Extension } from '@tiptap/core'
 import { Plugin, PluginKey } from 'prosemirror-state'
 import { Decoration, DecorationSet } from 'prosemirror-view'
 
-const caretState = {
-  isBlinking: false,
-}
-
 export const CustomCaretExtension = Extension.create({
   name: 'customCaret',
 
@@ -15,21 +11,29 @@ export const CustomCaretExtension = Extension.create({
         key: new PluginKey('customCaret'),
         props: {
           decorations(state) {
-            const { selection } = state
-            if (!selection.empty || !selection.anchor) {
-              return DecorationSet.empty
+            if (!state.selection.empty) {
+              return null
             }
 
-            const caretPos = selection.anchor
+            const caretPos = state.selection.anchor
             const decoration = Decoration.widget(caretPos, () => {
               const caret = document.createElement('span')
-              caret.className = `custom-caret ${
-                caretState.isBlinking ? 'blinking' : ''
-              }`
+              caret.className = 'custom-caret'
               return caret
             })
 
             return DecorationSet.create(state.doc, [decoration])
+          },
+
+          handleDOMEvents: {
+            mousedown: (view, _event) => {
+              setTimeout(() => {
+                if (!view.hasFocus()) {
+                  view.focus()
+                }
+              }, 0)
+              return false
+            },
           },
         },
       }),
