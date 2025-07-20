@@ -118,6 +118,8 @@ html {
   @apply break-words;
   caret-color: transparent;
   position: relative;
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 .ProseMirror:focus {
