@@ -2,6 +2,10 @@ import { Extension } from '@tiptap/core'
 import { Plugin, PluginKey } from 'prosemirror-state'
 import { Decoration, DecorationSet } from 'prosemirror-view'
 
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+}
+
 export const CustomCaretExtension = Extension.create({
   name: 'customCaret',
 
@@ -11,7 +15,7 @@ export const CustomCaretExtension = Extension.create({
         key: new PluginKey('customCaret'),
         props: {
           decorations(state) {
-            if (!state.selection.empty) {
+            if (isMobile() || !state.selection.empty) {
               return null
             }
 
@@ -27,6 +31,15 @@ export const CustomCaretExtension = Extension.create({
 
           handleDOMEvents: {
             mousedown: (view, _event) => {
+              setTimeout(() => {
+                if (!view.hasFocus()) {
+                  view.focus()
+                }
+              }, 0)
+              return false
+            },
+            
+            touchstart: (view, _event) => {
               setTimeout(() => {
                 if (!view.hasFocus()) {
                   view.focus()

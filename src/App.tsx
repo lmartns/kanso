@@ -12,6 +12,8 @@ function App() {
   const savedContent = localStorage.getItem('kanso-editor-content')
   const focusTimeout = useRef<number | null>(null)
 
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+
   const editor = useEditor({
     extensions: [StarterKit, CustomCaretExtension],
     autofocus: 'end',
@@ -19,17 +21,24 @@ function App() {
     editorProps: {
       attributes: {
         class: 'prose-mirror-editor',
+        'data-testid': 'editor',
+        'contenteditable': 'true',
+        'spellcheck': 'false',
       },
+      handleDOMEvents: {
+        touchstart: () => {
+          return false
+        }
+      }
     },
     onBlur: () => {
-      focusTimeout.current = window.setTimeout(() => {
-        if (
-          editor &&
-          !editor.isFocused
-        ) {
-          editor.chain().focus().run()
-        }
-      }, 2000)
+      if (!isMobile) {
+        focusTimeout.current = window.setTimeout(() => {
+          if (editor && !editor.isFocused) {
+            editor.chain().focus().run()
+          }
+        }, 1000)
+      }
     },
     onFocus: () => {
       if (focusTimeout.current) {
@@ -52,6 +61,19 @@ function App() {
       clearTimeout(debounceTimer)
     }
   }, [editor?.state.doc.content, editor])
+
+  useEffect(() => {
+    if (editor && isMobile) {
+      const handleTouch = () => {
+        if (!editor.isFocused) {
+          editor.commands.focus()
+        }
+      }
+      
+      document.addEventListener('touchstart', handleTouch)
+      return () => document.removeEventListener('touchstart', handleTouch)
+    }
+  }, [editor, isMobile])
 
   const handleDownloadMD = () => {
     if (!editor) return

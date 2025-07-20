@@ -144,6 +144,38 @@ html {
   animation: blink 2s infinite;
 }
 
+@media (max-width: 768px) {
+  .ProseMirror {
+    -webkit-user-select: text;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  
+  .custom-caret {
+    display: none;
+  }
+  
+  .ProseMirror {
+    caret-color: #f2c657 !important;
+  }
+  
+  .writer-container {
+    padding-bottom: 50vh;
+  }
+  
+  input, textarea, select {
+    font-size: 16px;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .ProseMirror {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+  }
+}
+
 @keyframes blink {
   0%,
   100% {
