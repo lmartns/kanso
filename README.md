@@ -1,69 +1,54 @@
-# React + TypeScript + Vite
+# ⛩️ Kanso - 簡素
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Kanso** is your calm space to write.  
+Markdown-powered. Ad-free. Open-source.
 
-Currently, two official plugins are available:
+![Screenshot](/src/assets/kanso-screenshot.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Why Kanso?
 
-## Expanding the ESLint configuration
+In a world of noisy apps and digital clutter, **Kanso** offers a peaceful writing environment.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Minimalist interface
+- Markdown support
+- Auto-save (locally)
+- No ads, no tracking
+- 100% Open Source
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Roadmap
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+These are the next steps planned for Kanso:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- [ ] Export to `.txt` and `.pdf`
+- [ ] Custom themes
+- [ ] Zen Mode
+- [ ] Vim mode (yes, btw I use neovim)
+
+> This roadmap is open suggestions.
+
+## Installation and usage (for contribution)
+
+1. Clone this repository
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+git@github.com:lmartns/kanso.git
 ```
+2. Install dependencies
+  ```
+  pnpm install
+  ```
+3. Start project 
+  ```
+  pnpm dev 
+  # or
+  npm run dev
+  ```
+
+## Contributions
+
+Pull requests are welcome!
+
+Let's build a calmer internet together.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
