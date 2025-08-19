@@ -128,11 +128,12 @@ html {
 
 .ProseMirror {
   @apply break-words;
-  caret-color: transparent;
   position: relative;
   -webkit-user-select: text;
   user-select: text;
   -webkit-user-modify: read-write;
+  caret-color: #f2c657 !important;
+  caret-shape: block !important;
 }
 
 .ProseMirror:focus {
@@ -169,10 +170,6 @@ html {
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     min-height: 50vh;
-  }
-
-  .custom-caret {
-    display: none !important;
   }
 
   .tiptap {

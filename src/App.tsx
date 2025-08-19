@@ -1,6 +1,5 @@
 import Writer from './components/Writer'
 import TurndownService from 'turndown'
-import { CustomCaretExtension } from './lib/extensions/custom-caret'
 import StarterKit from '@tiptap/starter-kit'
 import { useEditor } from '@tiptap/react'
 import { Button } from './components/ui/button'
@@ -13,7 +12,7 @@ function App() {
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 
   const editor = useEditor({
-    extensions: [StarterKit, CustomCaretExtension],
+    extensions: [StarterKit],
     autofocus: isMobile ? false : 'end',
     content: savedContent ? JSON.parse(savedContent) : '',
     editorProps: {
