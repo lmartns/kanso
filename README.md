@@ -21,7 +21,6 @@ These are the next steps planned for Kanso:
 
 - [ ] Export to `.txt` and `.pdf`
 - [ ] Custom themes
-- [ ] Zen Mode
 - [ ] Vim mode (yes, btw I use neovim)
 
 > This roadmap is open suggestions.
