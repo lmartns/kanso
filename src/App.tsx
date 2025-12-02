@@ -2,14 +2,22 @@ import Writer from './components/Writer'
 import TurndownService from 'turndown'
 import StarterKit from '@tiptap/starter-kit'
 import { useEditor } from '@tiptap/react'
-import { Button } from './components/ui/button'
-import { FileDown } from 'lucide-react'
 import { generateFileName } from './lib/utils/generate-file-name'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { FloatingMenu } from './components/FloatingMenu'
+import { StatusBar } from './components/StatusBar'
+import { WelcomeScreen } from './components/WelcomeScreen'
+import { cn } from './lib/utils'
 
 function App() {
   const savedContent = localStorage.getItem('kanso-editor-content')
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+  
+  const [isFocused, setIsFocused] = useState(false)
+  const [isFocusMode, setIsFocusMode] = useState(false)
+  const [wordCount, setWordCount] = useState(0)
+  const [isSaving, setIsSaving] = useState(false)
+  const [lastSaved, setLastSaved] = useState<Date | null>(null)
 
   const editor = useEditor({
     extensions: [StarterKit],
@@ -17,34 +25,40 @@ function App() {
     content: savedContent ? JSON.parse(savedContent) : '',
     editorProps: {
       attributes: {
-        class: 'prose-mirror-editor',
+        class: 'tiptap focus:outline-none',
         'data-testid': 'editor',
       },
     },
+    onUpdate: ({ editor }) => {
+      setWordCount(editor.storage.characterCount?.words() || 0)
+      setIsSaving(true)
+    },
+    onFocus: () => setIsFocused(true),
+    onBlur: () => setIsFocused(false),
     ...(isMobile ? {} : {
       onBlur: () => {
-        setTimeout(() => {
-          if (editor && !editor.isFocused) {
-            editor.chain().focus().run()
-          }
-        }, 1500)
+        setIsFocused(false)
       },
     }),
   })
 
   useEffect(() => {
-    if (!editor) {
-      return
+    if (editor) {
+      setWordCount(editor.state.doc.textContent.split(/\s+/).filter(w => w.length > 0).length)
     }
+  }, [editor?.state.doc.content, editor])
+
+  useEffect(() => {
+    if (!editor) return
 
     const debounceTimer = setTimeout(() => {
       const json = editor.getJSON()
       localStorage.setItem('kanso-editor-content', JSON.stringify(json))
-    }, 750)
+      setIsSaving(false)
+      setLastSaved(new Date())
+    }, 1000)
 
-    return () => {
-      clearTimeout(debounceTimer)
-    }
+    return () => clearTimeout(debounceTimer)
   }, [editor?.state.doc.content, editor])
 
   const handleDownloadMD = () => {
@@ -63,15 +77,44 @@ function App() {
   }
 
   return (
-    <main className="min-h-screen">
-      <div className="mx-auto flex max-w-4xl justify-end gap-2 p-4">
-        <Button variant="ghost" onClick={handleDownloadMD}>
-          <FileDown className="h-4 w-4" />
-        </Button>
+    <main className={cn(
+      "min-h-screen bg-background transition-colors duration-700 ease-in-out relative overflow-hidden",
+      isFocusMode && "cursor-none"
+    )}>
+      <WelcomeScreen />
+      
+      <div 
+        className={cn(
+          "transition-opacity duration-500",
+          isFocusMode && isFocused ? "opacity-0 hover:opacity-100" : "opacity-100"
+        )}
+      >
+        <FloatingMenu 
+          onDownload={handleDownloadMD} 
+          isFocusMode={isFocusMode}
+          toggleFocusMode={() => setIsFocusMode(!isFocusMode)}
+        />
       </div>
 
-      <div className={`writer-container ${isMobile ? 'mobile-writer' : ''}`}>
+      <div className={cn(
+        "mx-auto max-w-3xl px-6 py-24 md:py-32 animate-fade-in transition-all duration-700",
+        isMobile ? 'pb-40' : '',
+        isFocusMode ? "py-32 md:py-48" : ""
+      )}>
         <Writer editor={editor} />
+      </div>
+
+      <div 
+        className={cn(
+          "transition-opacity duration-500",
+          isFocusMode && isFocused ? "opacity-0" : "opacity-100"
+        )}
+      >
+        <StatusBar 
+          wordCount={wordCount} 
+          isSaving={isSaving} 
+          lastSaved={lastSaved} 
+        />
       </div>
     </main>
   )
