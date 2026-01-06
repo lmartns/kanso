@@ -9,23 +9,23 @@
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: 'Merriweather', 'Georgia', serif;
   --font-mono: 'JetBrains Mono', 'Geist Mono', monospace;
-  
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  
+
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -34,47 +34,48 @@
 /* Base Variables - Wabi-sabi & Shibui */
 :root {
   --radius: 0.5rem;
-  
+
   /* Light Mode - "Washi" (Japanese Paper) */
-  --background: #fdfbf7; 
-  --foreground: #2d2d2d; 
-  
+  --background: #fdfbf7;
+  --foreground: #2d2d2d;
+
   --muted: #f3f0e9;
   --muted-foreground: #8c8883;
-  
+
   --primary: #2d2d2d;
   --primary-foreground: #fdfbf7;
-  
+
   --accent: #e6e2d8;
   --accent-foreground: #2d2d2d;
-  
+
   --border: #e6e2d8;
   --input: #e6e2d8;
   --ring: #d4d0c4;
-  
-  --caret-color: #d4a373; /* Subtle Gold */
+
+  --caret-color: #d4a373;
+  /* Subtle Gold */
   --selection-color: #e6e2d8;
 }
 
 .dark {
   /* Dark Mode - "Yugen" (Deep Mystery) */
-  --background: #121212; 
-  --foreground: #e0e0e0; 
-  
+  --background: #121212;
+  --foreground: #e0e0e0;
+
   --muted: #1e1e1e;
   --muted-foreground: #888888;
-  
+
   --primary: #e0e0e0;
   --primary-foreground: #121212;
-  
+
   --accent: #2a2a2a;
   --accent-foreground: #e0e0e0;
-  
+
   --border: #2a2a2a;
   --input: #2a2a2a;
   --ring: #404040;
-  
-  --caret-color: #d4a373; 
+
+  --caret-color: #d4a373;
   --selection-color: #2a2a2a;
 }
 
@@ -88,76 +89,104 @@
   body {
     @apply bg-background text-foreground font-sans transition-colors duration-700 ease-in-out;
   }
-  
+
   ::selection {
     background-color: var(--selection-color);
     color: inherit;
   }
-  
+
   /* Custom Scrollbar - Minimal */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
-  
+
   ::-webkit-scrollbar-track {
     background: transparent;
   }
-  
+
   ::-webkit-scrollbar-thumb {
-    @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/40 transition-colors;
+    @apply bg-muted-foreground/20 hover:bg-muted-foreground/40 rounded-full transition-colors;
   }
 }
 
 /* Typography & Editor Styles - "Ma" (Space) */
 .tiptap {
-  @apply font-serif text-lg md:text-xl leading-loose outline-none max-w-none;
+  @apply max-w-none font-serif text-lg leading-loose outline-none md:text-xl;
   min-height: 60vh;
   color: var(--foreground);
 
   p {
-    margin-bottom: 1.75em; /* Breathing room */
+    margin-bottom: 1em;
+    /* Breathing room */
   }
 
-  h1, h2, h3, h4 {
-    @apply font-sans font-semibold tracking-tight text-foreground;
-    line-height: 1.3;
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-foreground font-sans font-semibold tracking-tight;
+    line-height: 1;
     margin-top: 3em;
     margin-bottom: 1em;
   }
 
-  h1 { @apply text-4xl md:text-5xl font-bold tracking-tighter; }
-  h2 { @apply text-3xl md:text-4xl; }
-  h3 { @apply text-2xl md:text-3xl; }
-  
-  ul, ol {
-    @apply pl-6 mb-8;
+  h1 {
+    @apply text-4xl font-bold tracking-tighter md:text-5xl;
   }
-  
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  ul,
+  ol {
+    @apply mb-6 pl-6;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
   li {
-    @apply mb-3 pl-2 marker:text-muted-foreground;
+    @apply marker:text-muted-foreground mb-1 pl-2;
+    line-height: 1;
+  }
+
+  li p {
+    margin-bottom: 0.25em;
   }
 
   blockquote {
-    @apply border-l-2 border-accent pl-6 italic text-muted-foreground my-10;
+    @apply border-accent text-muted-foreground my-10 border-l-2 pl-6 italic;
   }
-  
+
   code {
-    @apply font-mono text-sm bg-muted px-1.5 py-0.5 rounded text-primary;
+    @apply bg-muted text-primary rounded px-1.5 py-0.5 font-mono text-sm;
   }
-  
+
   pre {
-    @apply bg-muted p-6 rounded-lg overflow-x-auto my-8 border border-border/50;
-    
+    @apply bg-muted border-border/50 my-6 overflow-x-auto rounded-lg border p-4;
+    line-height: 1;
+
     code {
-      @apply bg-transparent p-0 text-foreground text-sm;
+      @apply text-foreground bg-transparent p-0 text-sm;
+      line-height: 1;
     }
   }
-  
+
   hr {
     @apply border-border my-16 opacity-50;
   }
-  
+
   /* Placeholder */
   p.is-editor-empty:first-child::before {
     color: var(--muted-foreground);
@@ -176,8 +205,15 @@
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
@@ -188,10 +224,68 @@
 @media (max-width: 768px) {
   .tiptap {
     @apply text-base leading-relaxed;
-    
-    h1 { @apply text-3xl; }
-    h2 { @apply text-2xl; }
+
+    h1 {
+      @apply text-3xl;
+    }
+
+    h2 {
+      @apply text-2xl;
+    }
   }
 }
 
+/* Syntax Highlighting - Wabi-sabi Theme */
+.tiptap pre code .hljs-comment,
+.tiptap pre code .hljs-quote {
+  color: var(--muted-foreground);
+  font-style: italic;
+}
+
+.tiptap pre code .hljs-keyword,
+.tiptap pre code .hljs-selector-tag,
+.tiptap pre code .hljs-built_in {
+  color: #b47d49;
+}
+
+.tiptap pre code .hljs-string,
+.tiptap pre code .hljs-attr,
+.tiptap pre code .hljs-template-tag {
+  color: #7d9a6a;
+}
+
+.tiptap pre code .hljs-number,
+.tiptap pre code .hljs-literal,
+.tiptap pre code .hljs-variable,
+.tiptap pre code .hljs-template-variable {
+  color: #c77d7d;
+}
+
+.tiptap pre code .hljs-function,
+.tiptap pre code .hljs-title {
+  color: #6a8fa3;
+}
+
+.tiptap pre code .hljs-type,
+.tiptap pre code .hljs-class .hljs-title {
+  color: #9a8a6a;
+}
+
+/* Code block language label */
+.tiptap pre {
+  position: relative;
+}
+
+.tiptap pre::before {
+  content: attr(data-language);
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  opacity: 0.6;
+}
 

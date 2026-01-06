@@ -8,11 +8,16 @@ import { FloatingMenu } from './components/FloatingMenu'
 import { StatusBar } from './components/StatusBar'
 import { WelcomeScreen } from './components/WelcomeScreen'
 import { cn } from './lib/utils'
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
+import Placeholder from '@tiptap/extension-placeholder'
+import { common, createLowlight } from 'lowlight'
+
+const lowlight = createLowlight(common)
 
 function App() {
   const savedContent = localStorage.getItem('kanso-editor-content')
   const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
-  
+
   const [isFocused, setIsFocused] = useState(false)
   const [isFocusMode, setIsFocusMode] = useState(false)
   const [wordCount, setWordCount] = useState(0)
@@ -20,7 +25,17 @@ function App() {
   const [lastSaved, setLastSaved] = useState<Date | null>(null)
 
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit.configure({
+        codeBlock: false,
+      }),
+      CodeBlockLowlight.configure({
+        lowlight,
+      }),
+      Placeholder.configure({
+        placeholder: '...',
+      }),
+    ],
     autofocus: isMobile ? false : 'end',
     content: savedContent ? JSON.parse(savedContent) : '',
     editorProps: {
@@ -82,15 +97,15 @@ function App() {
       isFocusMode && "cursor-none"
     )}>
       <WelcomeScreen />
-      
-      <div 
+
+      <div
         className={cn(
           "transition-opacity duration-500",
           isFocusMode && isFocused ? "opacity-0 hover:opacity-100" : "opacity-100"
         )}
       >
-        <FloatingMenu 
-          onDownload={handleDownloadMD} 
+        <FloatingMenu
+          onDownload={handleDownloadMD}
           isFocusMode={isFocusMode}
           toggleFocusMode={() => setIsFocusMode(!isFocusMode)}
         />
@@ -104,16 +119,16 @@ function App() {
         <Writer editor={editor} />
       </div>
 
-      <div 
+      <div
         className={cn(
           "transition-opacity duration-500",
           isFocusMode && isFocused ? "opacity-0" : "opacity-100"
         )}
       >
-        <StatusBar 
-          wordCount={wordCount} 
-          isSaving={isSaving} 
-          lastSaved={lastSaved} 
+        <StatusBar
+          wordCount={wordCount}
+          isSaving={isSaving}
+          lastSaved={lastSaved}
         />
       </div>
     </main>
